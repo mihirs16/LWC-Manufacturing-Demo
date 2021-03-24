@@ -8,6 +8,7 @@
 */
 import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import SubmitDetailsToLead from '@salesforce/apex/SubmitDetails.submitDetailsToLead';
 
 export default class SubmitDetailsForPartner extends LightningElement {
@@ -94,9 +95,25 @@ export default class SubmitDetailsForPartner extends LightningElement {
         SubmitDetailsToLead({ incoming: objToSend })
         .then((res) => {
             console.log(res);
+            alert('Data Submitted!');
+            // this.dispatchEvent (
+            //     new ShowToastEvent ({
+            //         title: 'Data Submitted!',
+            //         message: 'Your submitted data will be updated.',
+            //         variant: 'success'
+            //     })
+            // );
         })
         .catch((err) => {
             console.log(err);
+            alert('Oops! Something went Wrong!');
+            // this.dispatchEvent (
+            //     new ShowToastEvent ({
+            //         title: 'Oops!',
+            //         message: 'Something went wrong.',
+            //         variant: 'success'
+            //     })
+            // );
         })
     }
 }
