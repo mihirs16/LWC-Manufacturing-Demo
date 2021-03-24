@@ -1,0 +1,30 @@
+<aura:component controller="SubmitDetails" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    
+    <!-- Record Id -->
+    <aura:attribute name="recordId" type="Id" />
+    
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/>
+        
+    <!--Component Start-->
+    <div class="slds-m-around--xx-large">
+        <div class="slds-text-heading_medium slds-align_absolute-center">
+            Loading...
+        </div>
+    </div>
+    <!--Component End-->
+</aura:component>	

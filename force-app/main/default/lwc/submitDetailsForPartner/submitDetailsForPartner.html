@@ -1,0 +1,160 @@
+<template>
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:account'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Company Credit Application
+                </h1>
+            </div>
+        </div>
+        <lightning-input onchange={handleFormInputChange} name='company_name' class='slds-m-bottom_small' label='Company Name'></lightning-input>
+        <lightning-input onchange={handleFormInputChange} name='street_address' class='slds-m-bottom_small' label='Street Address'></lightning-input>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='country' class='slds-col' label='Country'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='state' class='slds-col' label='State'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='city' class='slds-col' label='City'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='postal_code' class='slds-col' label='Postal Code'></lightning-input>
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-grid_vertical-align-center slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='phone' type='tel' class='slds-col slds-size_1-of-4' label='Phone #'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='fax' class='slds-col slds-size_1-of-4' label='Fax #'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='public_company' type='checkbox' class='slds-col slds-size_1-of-4' label='Public Company'></lightning-input>
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='dnb' class='slds-col' label='D&B #'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='ap_email_address' class='slds-col' label='A/P Email Address'></lightning-input>
+            <!-- <lightning-input onchange={handleFormInputChange} name='federal_id' class='slds-col' label='Federal ID #'></lightning-input> -->
+            <!-- <lightning-input onchange={handleFormInputChange} name='credit_line_req' class='slds-col' label='Credit Line Requested'></lightning-input> -->
+        </div>
+    </section>
+
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:asset_object'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Tax Carrier Information
+                </h1>
+            </div>
+        </div>
+        <div class='slds-m-around_x-small slds-p-around_x-small' style='font-size: 10px; background: rgba(0, 0, 0, 0.1)'>
+            Tax Exemption is based on Shipping Destination. Please attach tax exemption(s) certificate for all states.
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-grid_vertical-align-start'>
+            <div class="slds-col slds-p-around_small">
+                <lightning-radio-group 
+                    onchange={handleFormInputChange} 
+                    name='freight_carrier'
+                    label="Freight Carrier"
+                    options={options_freight}
+                    type="radio"
+                ></lightning-radio-group>
+                <!-- <lightning-input onchange={handleFormInputChange} name='freight_carrier' label=' ' variant='label-hidden'></lightning-input> -->
+            </div>
+            <div class="slds-col slds-p-around_small">
+                <lightning-radio-group
+                    onchange={handleFormInputChange} 
+                    name='tax_exempt'
+                    label="Tax Exempt"
+                    options={options_tax}
+                    type="radio"
+                ></lightning-radio-group>
+            </div>
+            <div class='slds-col'>
+                <lightning-input onchange={handleFormInputChange} name='tax_acc_num' label='Account #'></lightning-input>
+            </div>
+        </div>
+    </section>
+    
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:home'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Shipping Address Information
+                </h1>
+            </div>
+        </div>
+        <div class='slds-m-around_x-small slds-p-around_x-small' style='font-size: 10px; background: rgba(0, 0, 0, 0.1)'>
+            Only needed if Shipping Address is different than Mailing Address.
+        </div>
+        <lightning-input onchange={handleFormInputChange} name='addr_company_name' class='slds-m-bottom_small' label='Company Legal Name'></lightning-input>
+        <lightning-input onchange={handleFormInputChange} name='addr_street_address' class='slds-m-bottom_small' label='Street Address'></lightning-input>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='addr_country' class='slds-col' label='Country'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='addr_state' class='slds-col' label='State'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='addr_city' class='slds-col' label='City'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='addr_postal_code' class='slds-col' label='Postal Code'></lightning-input>
+        </div>
+    </section>
+
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:individual'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Credit References
+                </h1>
+            </div>
+        </div>
+        <template if:true={creditRefs}>
+            <template for:each={creditRefs} for:item='credit_ref'>
+                <div key={credit_ref.index} class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+                    <lightning-input name='name' onchange={handleCredRefInput} data-id={credit_ref.index} class='slds-col' label='Name'></lightning-input>
+                    <lightning-input name='email' onchange={handleCredRefInput} data-id={credit_ref.index} class='slds-col' label='Email Address'></lightning-input>
+                    <lightning-input name='phone' onchange={handleCredRefInput} data-id={credit_ref.index} class='slds-col' label='Phone #'></lightning-input>
+                </div>
+            </template>
+        </template>
+        <lightning-button-icon onclick={addCreditRef} icon-name="utility:adduser"></lightning-button-icon>
+    </section>
+    
+    <!-- <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:collection'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    General Questions
+                </h1>
+            </div>
+        </div>
+        <lightning-input onchange={handleFormInputChange} name='annual_revenue' class='slds-m-bottom_small' label='Approximate Annual Revenue'></lightning-input>
+        <lightning-input onchange={handleFormInputChange} name='what_motivates_you' class='slds-m-bottom_small' label='What motivates you to join us?'></lightning-input>
+        <lightning-input onchange={handleFormInputChange} name='how_much_capital' class='slds-m-bottom_small' label='How much capital do you plan to contribute to the business?'></lightning-input>
+        <lightning-input onchange={handleFormInputChange} name='how_much_time' class='slds-m-bottom_small' label='How much time are you willing to commit to the business?'></lightning-input>
+    </section> -->
+
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:file'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Attachments
+                </h1>
+            </div>
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-input type='file' onchange={handleFormInputChange} name='adhaar_card' class='slds-col' label='Aadhar Card'></lightning-input>
+            <lightning-input type='file' onchange={handleFormInputChange} name='pan_card' class='slds-col' label='Pan Card'></lightning-input>
+            <lightning-input type='file' onchange={handleFormInputChange} name='passport' class='slds-col' label='Passport'></lightning-input>
+        </div>
+    </section>
+
+    <section class='slds-card slds-grid slds-p-around_medium slds-grid_align-center'>
+        <lightning-button onclick={submitDetails} variant='brand' label='Submit Details'></lightning-button>
+    </section>
+
+</template>
