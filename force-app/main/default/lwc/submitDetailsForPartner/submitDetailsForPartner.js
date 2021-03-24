@@ -13,6 +13,9 @@ import SubmitDetailsToLead from '@salesforce/apex/SubmitDetails.submitDetailsToL
 export default class SubmitDetailsForPartner extends LightningElement {
     
     @wire(CurrentPageReference)currentPageReference;
+    @track adhar_card_label;
+    @track pan_card_label;
+    @track passport_label;
     @track partnerDetails = {};
     @track creditRefs = [{
         index: 0,
@@ -43,17 +46,30 @@ export default class SubmitDetailsForPartner extends LightningElement {
     }
 
     handleFormInputChange(event){
-        this.partnerDetails[event.target.name] = event.target.value;
-        // if(event.target.files) {
-        //     this.partnerDetails[event.target.name] = event.target.files;
-        //     console.log(event.target.files);
-        //     var reader = new FileReader();
-        //     reader.onload = () => {
-        //         this.partnerDetails[event.target.name.toString() + '_content'] = reader.result;
-        //     }
-        //     reader.readAsDataURL(this.partnerDetails[event.target.name]);
-        // }
-        // console.log(event.target.name + ' now is set to ' + event.target.value);
+        var cmpName = event.target.name;
+        var cmpVal = event.target.value;
+        this.partnerDetails[cmpName] = cmpVal;
+        if (event.target.files) {
+            let reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            console.log(reader.result);
+            reader.onload = () => {
+                this.partnerDetails[cmpName] = {
+                    name: cmpVal.split('.').slice(-1)[0],
+                    data: encodeURIComponent(reader.result.split('base64,')[1]),
+                    type: (reader.result.split('base64,')[0]).split(':')[1]
+                }
+                switch (cmpName) {
+                    case 'aadhar_card': this.adhar_card_label = cmpVal; break;
+                    case 'pan_card': this.pan_card_label = cmpVal; break;
+                    case 'passport': this.passport_label = cmpVal; break;
+                    default: break;
+                }
+            }
+            reader.onerror = () => {
+                console.log(reader.error);
+            }
+        }
     }
 
     addCreditRef() {

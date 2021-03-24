@@ -147,9 +147,24 @@
             </div>
         </div>
         <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
-            <lightning-input type='file' onchange={handleFormInputChange} name='adhaar_card' class='slds-col' label='Aadhar Card'></lightning-input>
-            <lightning-input type='file' onchange={handleFormInputChange} name='pan_card' class='slds-col' label='Pan Card'></lightning-input>
-            <lightning-input type='file' onchange={handleFormInputChange} name='passport' class='slds-col' label='Passport'></lightning-input>
+            <div class='slds-col'>
+                <lightning-input type='file' onchange={handleFormInputChange} name='aadhar_card' label='Aadhar Card'></lightning-input>
+                <template if:true={adhar_card_label}>
+                    <span>{adhar_card_label}</span>
+                </template>
+            </div>
+            <div class='slds-col'>
+                <lightning-input type='file' onchange={handleFormInputChange} name='pan_card' label='Pan Card'></lightning-input>
+                <template if:true={pan_card_label}>
+                    <span>{pan_card_label}</span>
+                </template>
+            </div>
+            <div class='slds-col'>
+                <lightning-input type='file' onchange={handleFormInputChange} name='passport' label='Passport'></lightning-input>
+                <template if:true={passport_label}>
+                    <span>{passport_label}</span>
+                </template>
+            </div>
         </div>
     </section>
 

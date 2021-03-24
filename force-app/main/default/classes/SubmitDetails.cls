@@ -4,7 +4,7 @@
 * createDate: 24-03-2021
 * description: class to handle submit details action and input of details from partner
 */
-public with sharing class SubmitDetails {
+public class SubmitDetails {
 
     public class PartnerDetails {
         public String leadId;
@@ -31,12 +31,21 @@ public with sharing class SubmitDetails {
         public String addr_city;
         public String addr_postal_code;
         public List<CreditReference> creditRefs;
+        public FileAttachment aadhar_card;
+        public FileAttachment pan_card;
+        public FileAttachment passport;
     }
 
     public class CreditReference {
         String name;
         String email;
         String phone;
+    }
+
+    public class FileAttachment {
+        String name;
+        String data;
+        String type;
     }
 
     @AuraEnabled
@@ -57,11 +66,11 @@ public with sharing class SubmitDetails {
                 ,Country = partnerDetails.country
                 ,Phone = partnerDetails.phone
                 ,Fax = partnerDetails.fax
-                ,Public_Company__c = Boolean.valueOf(partnerDetails.public_company)
+                ,Public_Company__c = partnerDetails.public_company != null ? Boolean.valueOf(partnerDetails.public_company) : false
                 ,D_B_Number__c = partnerDetails.dnb
                 ,A_P_Email_ID__c = partnerDetails.ap_email_address
                 ,Freight_Carrier__c = partnerDetails.freight_carrier
-                ,Tax_Exempt__c = Boolean.valueOf(partnerDetails.tax_exempt)
+                ,Tax_Exempt__c = partnerDetails.tax_exempt != null ? Boolean.valueOf(partnerDetails.tax_exempt) : false
                 ,Credit_Reference_Name__c = partnerDetails.creditRefs[0].name
                 ,Credit_Reference_Email__c = partnerDetails.creditRefs[0].email
             );
@@ -69,7 +78,39 @@ public with sharing class SubmitDetails {
             System.debug(updatedLead);
             update updatedLead;
         }
- 
+
+        fileUploadAsAttachment(partnerDetails);
+    }
+
+    @AuraEnabled
+    public static void fileUploadAsAttachment(PartnerDetails partnerDetails){
+        if (partnerDetails.aadhar_card != null) {
+            Attachment attachment = new Attachment(
+                Body = EncodingUtil.base64Decode(EncodingUtil.urlDecode(partnerDetails.aadhar_card.data, 'UTF-8')),
+                Name = 'Aadhar Card.' + partnerDetails.aadhar_card.name,
+                ParentId = partnerDetails.leadId
+            );
+            insert attachment;
+        }
+
+        if (partnerDetails.pan_card != null) {
+            Attachment attachment = new Attachment(
+                Body = EncodingUtil.base64Decode(EncodingUtil.urlDecode(partnerDetails.pan_card.data, 'UTF-8')),
+                Name = 'Pan Card.' + partnerDetails.pan_card.name,
+                ParentId = partnerDetails.leadId
+            );
+            insert attachment;
+        }
+
+        if (partnerDetails.passport != null) {
+            Attachment attachment = new Attachment(
+                Body = EncodingUtil.base64Decode(EncodingUtil.urlDecode(partnerDetails.passport.data, 'UTF-8')),
+                Name = 'Passport.' + partnerDetails.passport.name,
+                ParentId = partnerDetails.leadId
+            );
+            insert attachment;
+        }
+
     }
 
     @AuraEnabled
@@ -90,7 +131,7 @@ public with sharing class SubmitDetails {
         );
         
         System.debug('Outgoing Email :: ' + email);
-        // Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
 
         return thisLead;
     }
