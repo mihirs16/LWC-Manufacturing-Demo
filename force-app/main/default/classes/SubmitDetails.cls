@@ -4,7 +4,9 @@
 * createDate: 24-03-2021
 * description: class to handle submit details action and input of details from partner
 */
-public class SubmitDetails {
+public without sharing class SubmitDetails {
+
+    public Lead thisLead;
 
     public class PartnerDetails {
         public String leadId;
@@ -56,34 +58,44 @@ public class SubmitDetails {
         System.debug('obj :: ' + partnerDetails);
 
         if(partnerDetails.leadId != null) {
-            Lead updatedLead = new Lead(
-                Id = partnerDetails.leadId
-                ,Company = partnerDetails.company_name
-                ,Street  = partnerDetails.street_address
-                ,City = partnerDetails.city
-                ,State = partnerDetails.state
-                ,PostalCode = partnerDetails.postal_code
-                ,Country = partnerDetails.country
-                ,Phone = partnerDetails.phone
-                ,Fax = partnerDetails.fax
-                ,Public_Company__c = partnerDetails.public_company != null ? Boolean.valueOf(partnerDetails.public_company) : false
-                ,D_B_Number__c = partnerDetails.dnb
-                ,A_P_Email_ID__c = partnerDetails.ap_email_address
-                ,Freight_Carrier__c = partnerDetails.freight_carrier
-                ,Tax_Exempt__c = partnerDetails.tax_exempt != null ? Boolean.valueOf(partnerDetails.tax_exempt) : false
-                ,Credit_Reference_Name__c = partnerDetails.creditRefs[0].name
-                ,Credit_Reference_Email__c = partnerDetails.creditRefs[0].email
-            );
-
-            System.debug(updatedLead);
-            update updatedLead;
+            updateThisLead(partnerDetails);
+            fileUploadAsAttachment(partnerDetails);
         }
 
-        fileUploadAsAttachment(partnerDetails);
     }
 
-    @AuraEnabled
-    public static void fileUploadAsAttachment(PartnerDetails partnerDetails){
+    private static void updateThisLead(PartnerDetails partnerDetails) {
+        Lead updatedLead = getThisLead(partnerDetails.LeadId);
+        
+        updatedLead.Id = partnerDetails.leadId;
+        updatedLead.Company = partnerDetails.company_name;
+        updatedLead.Street  = partnerDetails.street_address;
+        updatedLead.City = partnerDetails.city;
+        updatedLead.State = partnerDetails.state;
+        updatedLead.PostalCode = partnerDetails.postal_code;
+        updatedLead.Country = partnerDetails.country;
+        updatedLead.Phone = partnerDetails.phone;
+        updatedLead.Fax = partnerDetails.fax;
+        updatedLead.Public_Company__c = partnerDetails.public_company == 'true' ? true : false;
+        updatedLead.D_B_Number__c = partnerDetails.dnb;
+        updatedLead.A_P_Email_ID__c = partnerDetails.ap_email_address;
+        updatedLead.Freight_Carrier__c = partnerDetails.freight_carrier;
+        updatedLead.Tax_Exempt__c = partnerDetails.tax_exempt == 'true' ? true : false;
+        updatedLead.Credit_Reference_Name__c = partnerDetails.creditRefs[0].name;
+        updatedLead.Credit_Reference_Email__c = partnerDetails.creditRefs[0].email;
+
+        System.debug(updatedLead);
+        update updatedLead;
+    }
+
+    private static Lead getThisLead(String recordId) {
+        return [SELECT Id, Company, Street, City, State, PostalCode, Country, Phone, Fax, Public_Company__c, D_B_Number__c,
+                A_P_Email_ID__c, Freight_Carrier__c, Tax_Exempt__c, Credit_Reference_Name__c, Credit_Reference_Email__c
+                FROM Lead WHERE Id = :recordId
+        ][0];
+    }
+
+    private static void fileUploadAsAttachment(PartnerDetails partnerDetails){
         if (partnerDetails.aadhar_card != null) {
             Attachment attachment = new Attachment(
                 Body = EncodingUtil.base64Decode(EncodingUtil.urlDecode(partnerDetails.aadhar_card.data, 'UTF-8')),
