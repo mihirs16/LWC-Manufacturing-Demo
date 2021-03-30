@@ -66,7 +66,8 @@
                 ></lightning-radio-group>
             </div>
             <div class='slds-col'>
-                <lightning-input onchange={handleFormInputChange} name='tax_acc_num' label='Account #'></lightning-input>
+                <lightning-input class='slds-m-bottom_small' onchange={handleFormInputChange} name='bank_acc_num' label='Bank Account Number'></lightning-input>
+                <lightning-input onchange={handleFormInputChange} name='ifsc_code' label='IFSC Code'></lightning-input>
             </div>
         </div>
     </section>
@@ -169,7 +170,8 @@
     </section>
 
     <section class='slds-card slds-grid slds-p-around_medium slds-grid_align-center'>
-        <lightning-button onclick={submitDetails} variant='brand' label='Submit Details'></lightning-button>
+        <lightning-button class="slds-col slds-m-horizontal_small" onclick={submitDetails} variant='brand' label='Submit'></lightning-button>
+        <lightning-button class="slds-col slds-m-horizontal_small" variant='brand' label='Save'></lightning-button>
     </section>
 
 </template>

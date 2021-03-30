@@ -25,7 +25,8 @@ public without sharing class SubmitDetails {
         // public String credit_line_req;
         public String freight_carrier;
         public String tax_exempt;
-        public String tax_acc_num;
+        public String bank_acc_num;
+        public String ifsc_code;
         public String addr_company_name;
         public String addr_street_address;
         public String addr_country;
@@ -81,6 +82,8 @@ public without sharing class SubmitDetails {
         updatedLead.A_P_Email_ID__c = partnerDetails.ap_email_address;
         updatedLead.Freight_Carrier__c = partnerDetails.freight_carrier;
         updatedLead.Tax_Exempt__c = partnerDetails.tax_exempt == 'true' ? true : false;
+        updatedLead.Bank_Account_Num__c = partnerDetails.bank_acc_num;
+        updatedLead.IFSC_Code__c = partnerDetails.ifsc_code;
         updatedLead.Credit_Reference_Name__c = partnerDetails.creditRefs[0].name;
         updatedLead.Credit_Reference_Email__c = partnerDetails.creditRefs[0].email;
 
@@ -90,7 +93,7 @@ public without sharing class SubmitDetails {
 
     private static Lead getThisLead(String recordId) {
         return [SELECT Id, Company, Street, City, State, PostalCode, Country, Phone, Fax, Public_Company__c, D_B_Number__c,
-                A_P_Email_ID__c, Freight_Carrier__c, Tax_Exempt__c, Credit_Reference_Name__c, Credit_Reference_Email__c
+                A_P_Email_ID__c, Freight_Carrier__c, Tax_Exempt__c, Bank_Account_Num__c, IFSC_Code__c, Credit_Reference_Name__c, Credit_Reference_Email__c
                 FROM Lead WHERE Id = :recordId
         ][0];
     }
