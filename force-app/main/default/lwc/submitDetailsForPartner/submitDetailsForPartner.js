@@ -8,7 +8,7 @@
 */
 import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+// import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import SubmitDetailsToLead from '@salesforce/apex/SubmitDetails.submitDetailsToLead';
 
 export default class SubmitDetailsForPartner extends LightningElement {
