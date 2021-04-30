@@ -1,0 +1,80 @@
+<template>
+    <!-- personal -->
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:lead'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Contact Information
+                </h1>
+            </div>
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-bottom_small'>
+            <div class='slds-col slds-size_2-of-4 slds-m-bottom_small'>
+                <div class='slds-grid slds-gutters'>
+                    <lightning-combobox onchange={handleFormInputChange} options={titleOptions} class='slds-col slds-size_1-of-6' placeholder='Select' name='title' label='Title'></lightning-combobox>
+                    <lightning-input onchange={handleFormInputChange} name='first_name' class='slds-col' label='First Name' required></lightning-input>        
+                </div>
+            </div>
+            <lightning-input onchange={handleFormInputChange} name='last_name' class='slds-col slds-size_2-of-4 slds-m-bottom_small' label='Last Name' required></lightning-input>
+        </div>
+        <div class='slds-grid slds-gutters slds-wrap slds-grid_vertical-align-center slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='designation' class='slds-col slds-m-bottom_small' label='Designation'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='phone' type='tel' class='slds-col slds-m-bottom_small' label='Phone #'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='email' class='slds-col slds-m-bottom_small' label='Email'></lightning-input>
+            <!-- <lightning-input onchange={handleFormInputChange} type='date' class='slds-col slds-m-bottom_small' name='bday' label='Birthday'></lightning-input> -->
+        </div>
+    </section>
+
+    <!-- company -->
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:account'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Company Details
+                </h1>
+            </div>
+        </div>
+
+        <lightning-input onchange={handleFormInputChange} name='company' class='slds-m-bottom_small' label='Company Name' required></lightning-input>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-combobox onchange={handleFormInputChange} options={industry_options} name='industry_segment' class='slds-col slds-m-bottom_small' label='Industry Segment' required></lightning-combobox>
+            <lightning-combobox onchange={handleFormInputChange} options={type_firm_options} name='type_of_firm' class='slds-col slds-m-bottom_small' label='Type of Firm' required></lightning-combobox>
+        </div>
+
+    </section>
+
+    <!-- address -->
+    <section class='slds-card slds-p-around_small'>
+        <div class='slds-card__header slds-grid slds-gutters slds-grid_vertical-align-center'>
+            <div class='slds-m-right_small'>
+                <lightning-icon icon-name='standard:address'></lightning-icon>
+            </div>
+            <div>
+                <h1 class='slds-card__header-title'>
+                    Address & Misc.
+                </h1>
+            </div>
+        </div>
+
+        <lightning-input onchange={handleFormInputChange} name='street_address' class='slds-m-bottom_small' label='Street Address'></lightning-input>
+        <div class='slds-grid slds-gutters slds-wrap slds-m-bottom_small'>
+            <lightning-input onchange={handleFormInputChange} name='country' class='slds-col slds-m-bottom_small' label='Country'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='state' class='slds-col slds-m-bottom_small' label='State'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='city' class='slds-col slds-m-bottom_small' label='City'></lightning-input>
+            <lightning-input onchange={handleFormInputChange} name='postal_code' class='slds-col slds-m-bottom_small' label='Postal Code'></lightning-input>
+        </div>
+        <lightning-textarea name='comments' label='Any Comments?'></lightning-textarea>
+    </section>
+
+    
+
+    <section class='slds-card slds-grid slds-p-around_medium slds-grid_align-center'>
+        <lightning-button onclick={submitDetails} variant='brand' label='Submit Details'></lightning-button>
+    </section>
+</template>

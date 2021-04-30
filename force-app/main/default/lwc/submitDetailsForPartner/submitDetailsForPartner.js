@@ -95,7 +95,7 @@ export default class SubmitDetailsForPartner extends LightningElement {
         SubmitDetailsToLead({ incoming: objToSend })
         .then((res) => {
             console.log(res);
-            alert('Data Submitted!');
+            alert('Your details have been submitted Successfully!');
             // this.dispatchEvent (
             //     new ShowToastEvent ({
             //         title: 'Data Submitted!',
